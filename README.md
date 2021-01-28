@@ -2,7 +2,7 @@
 
 Tensorflow SSD implementation from scratch. [MobileNetV2](https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV2) and [VGG16](https://www.tensorflow.org/api_docs/python/tf/keras/applications/VGG16) backbones are supported.
 
-It's implemented and tested with **tensorflow 2.0, 2.1, and 2.2**
+It's implemented and tested with **tensorflow 2.x**
 
 ## Usage
 
