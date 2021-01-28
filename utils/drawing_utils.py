@@ -2,6 +2,9 @@ import tensorflow as tf
 from PIL import Image, ImageDraw
 import matplotlib.pyplot as plt
 from utils import bbox_utils
+import numpy as np
+import time
+from io import BytesIO
 
 def draw_grid_map(img, grid_map, stride):
     """Drawing grid intersection on given image.
@@ -42,8 +45,8 @@ def draw_bboxes(imgs, bboxes):
         plt.imshow(img_with_bb)
         plt.show()
 
-def draw_bboxes_with_labels(img, bboxes, label_indices, probs, labels):
-    """Drawing bounding boxes with labels on given image.
+def draw_bboxes_with_labels(img, bboxes, label_indices, probs, labels, outPath):
+    """Drawing and saving bounding boxes with labels on given image.
     inputs:
         img = (height, width, channels)
         bboxes = (total_bboxes, [y1, x1, y2, x2])
@@ -67,12 +70,16 @@ def draw_bboxes_with_labels(img, bboxes, label_indices, probs, labels):
         label_text = "{0} {1:0.3f}".format(labels[label_index], probs[index])
         draw.text((x1 + 4, y1 + 2), label_text, fill=color)
         draw.rectangle((x1, y1, x2, y2), outline=color, width=3)
+        byte_io = BytesIO()
+        image.save(outPath + '/' + str(time.time()) + ".jpeg")
+        print("saved")
     #
     plt.figure()
     plt.imshow(image)
     plt.show()
 
-def draw_predictions(dataset, pred_bboxes, pred_labels, pred_scores, labels, batch_size):
+
+def draw_predictions(dataset, pred_bboxes, pred_labels, pred_scores, labels, batch_size, outPath):
     for batch_id, image_data in enumerate(dataset):
         imgs, _, _ = image_data
         img_size = imgs.shape[1]
@@ -81,4 +88,4 @@ def draw_predictions(dataset, pred_bboxes, pred_labels, pred_scores, labels, bat
         batch_bboxes, batch_labels, batch_scores = pred_bboxes[start:end], pred_labels[start:end], pred_scores[start:end]
         for i, img in enumerate(imgs):
             denormalized_bboxes = bbox_utils.denormalize_bboxes(batch_bboxes[i], img_size, img_size)
-            draw_bboxes_with_labels(img, denormalized_bboxes, batch_labels[i], batch_scores[i], labels)
+            draw_bboxes_with_labels(img, denormalized_bboxes, batch_labels[i], batch_scores[i], labels, outPath)

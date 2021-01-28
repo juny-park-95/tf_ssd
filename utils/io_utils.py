@@ -40,6 +40,7 @@ def handle_args():
                         default="mobilenet_v2",
                         metavar="['mobilenet_v2', 'vgg16']",
                         help="Which backbone used for the ssd")
+    parser.add_argument('--out_path', required=True, type=str, help='prediction output here')
     args = parser.parse_args()
     return args
 

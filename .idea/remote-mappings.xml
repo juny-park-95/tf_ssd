@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="python@0e14b392-5cee-4778-98e1-97dd399d4481" />
+        <remote-mappings server-id="python@sftp://deep@10.1.7.12:22/home/deep/anaconda3/envs/gacheon_ssd/bin/python3">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/home/deep/junyoung/models/tf-ssd" />
+            </list>
+          </settings>
+        </remote-mappings>
+      </list>
+    </list>
+  </component>
+</project>
