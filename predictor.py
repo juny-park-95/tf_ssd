@@ -9,8 +9,9 @@ if args.handle_gpu:
 
 batch_size = 32
 evaluate = False
-use_custom_images = False
-custom_image_path = "data/images/"
+use_custom_images = args.use_custom
+if use_custom_images:
+    custom_image_path = args.custom_path
 backbone = args.backbone
 io_utils.is_valid_backbone(backbone)
 #
@@ -21,7 +22,7 @@ else:
 #
 hyper_params = train_utils.get_hyper_params(backbone)
 #
-test_data, info = data_utils.get_dataset("voc/2007", "test")
+test_data, info = data_utils.get_dataset(args.dataset_path, "test")
 total_items = data_utils.get_total_item_size(info, "test")
 labels = data_utils.get_labels(info)
 labels = ["bg"] + labels

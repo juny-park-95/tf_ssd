@@ -29,7 +29,7 @@ def preprocessing(image_data, final_height, final_width, augmentation_fn=None, e
         img, gt_boxes = augmentation_fn(img, gt_boxes)
     return img, gt_boxes, gt_labels
 
-def get_dataset(name, split, data_dir="~/tensorflow_datasets"):
+def get_dataset(name, split, data_dir="/content/drive/MyDrive/tensorflow_datasets"):
     """Get tensorflow dataset split and info.
     inputs:
         name = name of the dataset, voc/2007, voc/2012, etc.

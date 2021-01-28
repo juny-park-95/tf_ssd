@@ -41,6 +41,9 @@ def handle_args():
                         metavar="['mobilenet_v2', 'vgg16']",
                         help="Which backbone used for the ssd")
     parser.add_argument('--out_path', required=True, type=str, help='prediction output here')
+    parser.add_argument('--use_custom', default=False, type=bool, help='use custom dataset')
+    parser.add_argument('--custom_path', default="data/images/", type=str, help='write custom dataset path here')
+    parser.add_argument('--dataset_path', default="voc/2007", type=str, help='write custom dataset path here')
     args = parser.parse_args()
     return args
 
