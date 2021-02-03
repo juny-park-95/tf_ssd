@@ -23,6 +23,8 @@ else:
 #
 hyper_params = train_utils.get_hyper_params(backbone)
 #
+
+# Prepare for training data
 train_data, info = data_utils.get_dataset("voc/2007", "train+validation")
 val_data, _ = data_utils.get_dataset("voc/2007", "test")
 train_total_items = data_utils.get_total_item_size(info, "train+validation")
@@ -33,12 +35,16 @@ if with_voc_2012:
     voc_2012_total_items = data_utils.get_total_item_size(voc_2012_info, "train+validation")
     train_total_items += voc_2012_total_items
     train_data = train_data.concatenate(voc_2012_data)
+#
 
+# Get labels
 labels = data_utils.get_labels(info)
+# Add background label into labels
 labels = ["bg"] + labels
+# Get hyper-parameters and image size
 hyper_params["total_labels"] = len(labels)
 img_size = hyper_params["img_size"]
-
+# Data pre-processing
 train_data = train_data.map(lambda x : data_utils.preprocessing(x, img_size, img_size, augmentation.apply))
 val_data = val_data.map(lambda x : data_utils.preprocessing(x, img_size, img_size))
 
@@ -46,13 +52,13 @@ data_shapes = data_utils.get_data_shapes()
 padding_values = data_utils.get_padding_values()
 train_data = train_data.shuffle(batch_size*4).padded_batch(batch_size, padded_shapes=data_shapes, padding_values=padding_values)
 val_data = val_data.padded_batch(batch_size, padded_shapes=data_shapes, padding_values=padding_values)
-#
+# Setup training model (ssd+vgg) and loss function (location + confidence)
 ssd_model = get_model(hyper_params)
 ssd_custom_losses = CustomLoss(hyper_params["neg_pos_ratio"], hyper_params["loc_loss_alpha"])
 ssd_model.compile(optimizer=Adam(learning_rate=1e-3),
                   loss=[ssd_custom_losses.loc_loss_fn, ssd_custom_losses.conf_loss_fn])
 init_model(ssd_model)
-#
+
 ssd_model_path = io_utils.get_model_path(backbone)
 if load_weights:
     ssd_model.load_weights(ssd_model_path)

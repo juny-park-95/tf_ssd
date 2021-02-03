@@ -10,7 +10,6 @@ class CustomLoss(object):
         inputs:
             actual_deltas = (batch_size, total_prior_boxes, [delta_y, delta_x, delta_h, delta_w])
             pred_deltas = (batch_size, total_prior_boxes, [delta_y, delta_x, delta_h, delta_w])
-
         outputs:
             loc_loss = localization / regression / bounding box loss value
         """
