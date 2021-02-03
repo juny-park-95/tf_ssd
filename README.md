@@ -29,7 +29,7 @@ python trainer.py --backbone mobilenet_v2
 python predictor.py --backbone vgg16
 ```
 
-If you have GPU issues you can use **-handle-gpu** flag with these commands:
+If you have GPU issues (e.g., CuDNN, or something like that) you guys can use **-handle-gpu** flag with these commands:
 
 ```sh
 python trainer.py -handle-gpu
