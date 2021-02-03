@@ -14,6 +14,10 @@ To create virtual environment (tensorflow-2 gpu environment):
 ```sh
 conda env create -f environment.yml
 ```
+or
+```sh
+conda env create -n WHATEVER_YOU_WANT_NAME_FOR -f environment.yml
+```
 
 There are two different backbone, first one the legacy **vgg16** backbone and the second and default one is **mobilenet_v2**.
 You can easily specify the backbone to be used with the **--backbone** parameter.
